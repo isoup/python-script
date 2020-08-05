@@ -1,0 +1,24 @@
+#! /usr/bin/env python
+import ipaddress
+import sys
+
+def subnets(network):
+    a = ipaddress.ip_network(network)
+    b = list(a.subnets(new_prefix=28))
+    with open("vlan-networks.txt",'w') as f:
+        for i in range(len(b)):
+            f.write("%d\t%s\n" % (i+1001,b[i]))
+
+def main():
+	if len(sys.argv)==2:
+	    try:
+	        network = sys.argv[1]
+	        print(network)
+	        subnets(network)
+	    except:
+	        print("Invalid network!")
+	else:
+	    print("Usage: python ip-to-file.function.py <network>")
+
+if __name__ == '__main__':
+	main()
